@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+import config from "../config/config.mongodb.js";
 
-const connectString = `mongodb://localhost:27017/shopDev`;
-
+const connectString = `mongodb://${config.db.host}:${config.db.port}/${config.db.name}`;
+console.log("Connect String::", connectString);
 class Database {
   constructor() {
     this.connect();

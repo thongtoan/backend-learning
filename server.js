@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import app from "./src/app.js";
 import { checkOverload } from "./src/helpers/check.connect.js";
 
-const PORT = 3055;
+const PORT = process.env.PORT || 3056;
 
 const server = app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
