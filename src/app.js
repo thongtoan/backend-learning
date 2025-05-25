@@ -5,6 +5,7 @@ import compression from "compression";
 import "dotenv/config";
 import { instanceMongodb } from "./dbs/init.mongodb.js";
 import { countConnect, checkOverload } from "./helpers/check.connect.js";
+import router from "./routes/index.js";
 
 const app = express();
 
@@ -19,12 +20,8 @@ countConnect();
 // checkOverload();
 
 // init routes
-app.get("/", (req, res, next) => {
-  const strCompression = "HaHa";
-  return res.status(200).json({
-    message: "Welcome Toan!",
-  });
-});
+app.use("", router);
+
 // handling error
 
 export default app;
