@@ -4,6 +4,10 @@ import KeyTokenService from "./keyToken.service.js";
 import createTokenPair from "../auth/authUtils.js";
 import { getInfoData } from "../utils/index.js";
 import crypto from "crypto";
+import {
+  BadRequestError,
+  ConflictRequestError,
+} from "../core/error.response.js";
 
 const RoleUser = {
   SHOP: "SHOP",
@@ -17,10 +21,7 @@ class AccessService {
     try {
       const holderUser = await UserModel.findOne({ email }).lean();
       if (holderUser) {
-        return {
-          code: "xxx",
-          message: "Shop already registered!",
-        };
+        throw new BadRequestError("Error: User already registered");
       }
 
       const passwordHarsh = await bcrypt.hash(password, 10);
@@ -43,10 +44,7 @@ class AccessService {
         });
 
         if (!keyStore) {
-          return {
-            code: "xxxx",
-            message: "keyStore error",
-          };
+          throw new BadRequestError("Error: Store key error");
         }
 
         const tokens = await createTokenPair(
