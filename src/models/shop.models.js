@@ -1,9 +1,8 @@
 import mongoose, { Schema } from "mongoose";
-// Declare the Schema of the Mongo model
-const DOCUMENT_NAME = "Shop";
-const COLLECTION_NAME = "Shops";
+const DOCUMENT_NAME = "User";
+const COLLECTION_NAME = "Users";
 
-const shopSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -28,11 +27,11 @@ const shopSchema = new mongoose.Schema(
       default: "inactive",
     },
     verify: {
-      type: Schema.Types.Boolean,
+      type: Boolean,
       default: false,
     },
     roles: {
-      type: Array,
+      type: [String],
       default: [],
     },
   },
@@ -42,5 +41,5 @@ const shopSchema = new mongoose.Schema(
   }
 );
 
-//Export the model
-module.exports = mongoose.model("User", userSchema);
+const UserModel = mongoose.model(DOCUMENT_NAME, userSchema);
+export default UserModel;

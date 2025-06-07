@@ -1,2 +1,10 @@
 ### signup
-POST http://localhost:3055/v1/api/shop/signup
+@url_dev=http://localhost:3055/v1/api
+POST {{url_dev}}/shop/signup
+Content-Type: application/json
+
+{
+    "name": "Toan 22",
+    "email": "n.thongtoan22@gmail.com",
+    "password": "Password123"
+}

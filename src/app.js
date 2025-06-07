@@ -9,19 +9,18 @@ import router from "./routes/index.js";
 
 const app = express();
 
-// console.log(`process`, process.env);
-// init middleware
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(compression());
+app.use(express.json());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
-// inite db
 countConnect();
-// checkOverload();
 
-// init routes
-app.use("", router);
-
-// handling error
+app.use("/", router);
 
 export default app;
