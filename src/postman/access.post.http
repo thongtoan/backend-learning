@@ -2,6 +2,7 @@
 @url_dev=http://localhost:3055/v1/api
 POST {{url_dev}}/shop/signup
 Content-Type: application/json
+x-api-key: dd646ad79028209189c890a66ab31f6ecf2b1e6f3f23ef34281e2a970fa7918c56d589b8f69bd922138c35849e038a83de07c6b7b7914405727eda5bef9871f0
 
 {
     "name": "Toan 27",

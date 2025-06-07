@@ -4,7 +4,6 @@ import KeyTokenService from "./keyToken.service.js";
 import createTokenPair from "../auth/authUtils.js";
 import { getInfoData } from "../utils/index.js";
 import crypto from "crypto";
-import { log } from "console";
 
 const RoleUser = {
   SHOP: "SHOP",
