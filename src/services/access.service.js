@@ -5,9 +5,12 @@ import createTokenPair from "../auth/authUtils.js";
 import { getInfoData } from "../utils/index.js";
 import crypto from "crypto";
 import {
+  AuthFailureError,
   BadRequestError,
   ConflictRequestError,
 } from "../core/error.response.js";
+import { findByEmail } from "./user.service.js";
+import { log } from "console";
 
 const RoleUser = {
   SHOP: "SHOP",
@@ -77,6 +80,36 @@ class AccessService {
         status: "error",
       };
     }
+  };
+
+  static login = async ({ email, password, refreshToken = null }) => {
+    const isUser = await findByEmail({ email });
+    if (!isUser) throw new BadRequestError("Shop not registered");
+
+    const isMatch = bcrypt.compare(password, isUser.password);
+    if (!isMatch) throw new AuthFailureError("Authentication error");
+
+    const publicKey = crypto.randomBytes(64).toString("hex");
+    const privateKey = crypto.randomBytes(64).toString("hex");
+
+    const { _id: userId } = isUser;
+    const tokens = await createTokenPair(
+      { userId, email },
+      publicKey,
+      privateKey
+    );
+
+    await KeyTokenService.createKeyToken({
+      refreshToken: tokens.refreshToken,
+      privateKey,
+      publicKey,
+      userId,
+    });
+
+    return {
+      user: getInfoData({ fields: ["_id", "name", "email"], object: isUser }),
+      tokens,
+    };
   };
 }
 

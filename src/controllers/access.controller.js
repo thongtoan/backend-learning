@@ -1,4 +1,4 @@
-import { CREATED } from "../core/success.response.js";
+import { CREATED, SuccessResponse } from "../core/success.response.js";
 import AccessService from "../services/access.service.js";
 
 class AccessController {
@@ -20,6 +20,13 @@ class AccessController {
       },
     }).send(res);
     // return res.status(201).json(await AccessService.signUp(req.body));
+  };
+
+  static login = async (req, res) => {
+    new SuccessResponse({
+      // message: "Login successfully",
+      metadata: await AccessService.login(req.body),
+    }).send(res);
   };
 }
 
